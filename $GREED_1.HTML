@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<TITLE>$Greed</TITLE>
+<SCRIPT LANGUAGE = "JavaScript">
+
+var diceOptions;
+diceOptions = ["$","G","R","LE","LD","D"];
+
+function main() {
+	var player1Points;
+	var player2Points;
+	var running;
+	var result;
+	var roll;
+	var yes;
+	
+	yes = ["yes", "y"];
+	result = [];
+	player1Points = 0;
+	
+	running = prompt("Do you want to play Greed(Y/N))");
+	running = running.toUpperCase();
+	
+	while (running == "Y") {
+		roll = prompt("do you want to roll the dice");
+		roll = roll.toLowerCase()
+		
+		if (yes.includes(roll)) {
+			theRoll = resultOfRoll(diceOptions);
+			document.getElementById("messages").innerHTML = "<P>You rolled: </P>" + result;
+			player1Points = player1Points + scoring(theRoll, player1Points);
+			document.getElementById("ScoreP1").innerHTML = "<P>P1s points are: </P>" + player1Points;
+			roll = 'no';
+			running = 'no'
+		} else {
+			document.write("Okay");
+			running = 'no';
+		}
+	}
+	
+function resultOfRoll() {
+	result = Array.from({ length: 6 }, rolldice);
+	return result;
+}
+	
+function scoring(diceValues, initialTotal) {
+	var points;
+	return diceValues.reduce((total, face) => {
+		if (face === "G") return total + 50;
+		if (face === "D") return total + 100;
+		return total;
+	}, initialTotal);
+	
+	for (let i = 0, )
+}
+	
+function rolldice() {
+	var answer;
+	
+	answer = diceOptions[Math.floor(Math.random() * diceOptions.length)];
+	
+	return answer;
+	
+}
+
+window.onload = function() {
+	main();
+
+}	
+	
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+<BODY BGCOLOR = white>
+<CENTER><H2>$Greed</H2></CENTER>
+<HR>
+<DIV id="messages"></DIV>
+<DIV id="ScoreP1"></DIV>
+<DIV id="ScoreP2"></DIV>
+<SCRIPT LANGUAGE="JavaScript">main();</SCRIPT>
+</BODY>
+</HTML>
