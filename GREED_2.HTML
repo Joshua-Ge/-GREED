@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<TITLE>$Greed</TITLE>
+<SCRIPT LANGUAGE = "JavaScript">
+
+var diceOptions;
+diceOptions = ["$","G","R","LE","LD","D"];
+
+function main() {
+	var player1Points;
+	var player2Points;
+	var running;
+	var result;
+	var roll;
+	var yes;
+	
+	yes = ["yes", "y"];
+	result = [];
+	player1Points = 0;
+	
+	running = prompt("Do you want to play Greed(Y/N))");
+	running = running.toUpperCase();
+	
+	while (running == "Y") {
+		roll = prompt("do you want to roll the dice");
+		roll = roll.toLowerCase()
+		
+		if (yes.includes(roll)) {
+			theRoll = resultOfRoll(diceOptions);
+			document.getElementById("messages").innerHTML = "<P>You rolled: </P>" + result;
+			player1Points = player1Points + scoring(theRoll, player1Points);
+			document.getElementById("ScoreP1").innerHTML = "<P>P1s points are: </P>" + player1Points;
+			roll = 'no';
+			running = 'no'
+		} else {
+			document.write("Okay");
+			running = 'no';
+		}
+	}
+	
+function resultOfRoll() {
+	result = Array.from({ length: 6 }, rolldice);
+	return result;
+}
+	
+function scoring(diceValues, initialTotal) {
+	var points;
+	var counts; // begining of the dictionary which will hold the values of the results of the rolled dice
+	counts = {}; // dictionary which will hold the values of the results of the rolled dice
+	points = initialTotal; // set the original value of the points as the starting value of points
+	
+	// converts all the values in the rolled dice into a dictionary so operations can easily be done with them
+	diceValues.forEach(side => {
+		counts[side] = (counts[side] || 0) + 1;
+	})
+	
+	// adds points corresponding to the values of the dice 
+    if (counts["LE"] >= 3 && counts["LE"] < 6) points += Math.floor(counts["LE"] / 3) * 300;
+    if (counts["DE"] >= 3 && counts["DE"] < 6) points += Math.floor(counts["DE"] / 3) * 300;
+    if (counts["R"] >= 3 && counts["R"] < 6) points += Math.floor(counts["R"] / 3) * 400;
+    if (counts["$"] >= 3 && counts["$"] < 6) points += Math.floor(counts["$"] / 3) * 600;
+    if (counts["G"] >= 3 && counts["G"] < 6) points += Math.floor(counts["G"] / 3) * 500;
+    if (counts["D"] >= 4 && counts["D"] < 6) points += Math.floor(counts["D"] / 4) * 1000;
+	
+	// adding points for single Gs
+	if (counts["G"] > 3) points += (counts["G"] - 3) * 50;
+	if (counts["G"] < 3) points += counts["G"] * 50;
+	
+	// adding for single Ds
+	if (counts["D"] > 4) points += (counts["D"] - 4) * 100;
+	if (counts["D"] < 4) points += counts["D"] * 100;
+	
+	// six of a kind for each letter and making it equal an additional 5k points
+    if (counts["LE"] === 6) points += 5000;
+    if (counts["DE"] === 6) points += 5000;
+    if (counts["R"] === 6) points += 5000;
+    if (counts["$"] === 6) points += 5000;
+    if (counts["G"] === 6) points += 5000;
+    if (counts["D"] === 6) points += 5000;
+	if (counts["LE"] == 1 && counts["DE"] == 1 && counts["R"] == 1 && counts["$"] == 1 && counts["G"] == 1 && counts["D"] == 1) points += 1000;
+	
+	// lets the function save the value of points in another function
+	return points;
+}
+	
+function rolldice() {
+	var answer;
+	
+	answer = diceOptions[Math.floor(Math.random() * diceOptions.length)];
+	
+	return answer;
+	
+}
+
+window.onload = function() {
+	main();
+
+}	
+	
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+<BODY BGCOLOR = white>
+<CENTER><H2>$Greed</H2></CENTER>
+<HR>
+<DIV id="messages"></DIV>
+<DIV id="ScoreP1"></DIV>
+<DIV id="ScoreP2"></DIV>
+<SCRIPT LANGUAGE="JavaScript">main();</SCRIPT>
+</BODY>
+</HTML>
